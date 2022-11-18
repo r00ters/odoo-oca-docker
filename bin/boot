@@ -107,8 +107,8 @@ function _download_addons {
     #  2) There's a file called `oca_dependencies.txt` at the root of extra addons folder
     if [ "$ADDONS_REPO" -o -f /opt/odoo/additional_addons/oca_dependencies.txt ]; then
         # Git config for target user
-        sudo -i -u "$odoo_user" git config --global user.email "webmaster@elico-corp.com"
-        sudo -i -u "$odoo_user" git config --global user.name "Elico Corp - Odoo Docker"
+        sudo -i -u "$odoo_user" git config --global user.email "sales@rooters.it"
+        sudo -i -u "$odoo_user" git config --global user.name "Rooters SRLS - Odoo Docker"
 
         # Setup SSH key
         if [ -f /opt/odoo/ssh/id_rsa ]; then
@@ -122,7 +122,7 @@ function _download_addons {
 
         echo $log_src[`date +%F.%H:%M:%S`]' Downloading additional addons...'
         sudo -i -u "$odoo_user" python /opt/odoo/auto_addons/addons.py \
-            "$FETCH_OCA_DEPENDENCIES" "$ADDONS_REPO"
+            "$FETCH_OCA_DEPENDENCIES" "$ADDONS_REPO" "$ADDONS_REPO_BRANCH"
     else
         # No additional addons to download
         grep -q '^addons_path\s*=' "$odoo_conf_file"

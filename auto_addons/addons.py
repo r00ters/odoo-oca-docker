@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2015 Elico Corp
+# Copyright 2022 Rooters SRLS
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import os
 import re
@@ -296,6 +297,8 @@ def write_addons_path(addons_path):
 def main():
     fetch_dep = True
     remote_url = None
+    remote_branch = None
+    parent = None
     addons_path = []
 
     # 1st param is FETCH_OCA_DEPENDENCIES
@@ -307,9 +310,14 @@ def main():
     if len(sys.argv) > 2:
         remote_url = sys.argv[2]
 
+    # 3rd param is the ADDONS_REPO_BRANCH
+    if len(sys.argv) > 3:
+        remote_branch = sys.argv[3]
+        parent = type('',(),{'branch': remote_branch})()
+
     if remote_url:
         # Only one master repo to download
-        Repo(remote_url, fetch_dep).download(addons_path)
+        Repo(remote_url, fetch_dep, parent).download(addons_path)
     else:
         # List of repos defined in oca_dependencies.txt at the root of
         # additional_addons folder, download them all

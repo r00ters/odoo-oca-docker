@@ -1,8 +1,9 @@
 FROM ubuntu:20.04
-MAINTAINER Elico Corp <webmaster@elico-corp.com>
+MAINTAINER Rooters SRLS <sales@rooters.it>
 
 # Define build constants
-ENV GIT_BRANCH=master \
+ENV GIT_ODOO_REPO=https://github.com/OCA/OCB.git \
+  GIT_ODOO_BRANCH=16.0 \
   PYTHON_BIN=python3 \
   SERVICE_BIN=odoo-bin
 
@@ -33,8 +34,8 @@ RUN /bin/bash -c "mkdir -p /opt/odoo/{etc,sources/odoo,additional_addons,data,ss
 
 # Add Odoo sources and remove .git folder in order to reduce image size
 WORKDIR /opt/odoo/sources
-RUN git clone --depth=1 https://github.com/odoo/odoo.git -b $GIT_BRANCH \
-  && rm -rf odoo/.git
+RUN git clone --depth=1 "${GIT_ODOO_REPO}" -b "${GIT_ODOO_BRANCH}" odoo \
+  && rm -rf !$/.git
 
 ADD sources/odoo.conf /opt/odoo/etc/odoo.conf
 ADD auto_addons /opt/odoo/auto_addons
