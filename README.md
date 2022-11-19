@@ -1,11 +1,15 @@
 # r00ters / odoo-oca
-Simple yet powerful [Odoo][odoo] image for [Docker][dk] maintained by [Rooters SRLS][ro] based on "elicocorp/odoo" by 
+Simple yet powerful [Odoo][odoo] image for [Docker][dk] maintained by [Rooters SRLS][ro] obased on "elicocorp/odoo" by 
 [Elico Corporation][ec].
+
+This image uses the [OCB][ocb] (Odoo Community Backports). OCB is a voluntary work to fix bugs and security breaches in Odoo versions that the Odoo company will not maintains. [Read more][ocb-more].
 
 [odoo]: https://www.odoo.com/
 [dk]: https://www.docker.com/
 [ro]: https://www.rooters.it/
 [ec]: https://www.elico-corp.com/
+[ocb]: https://github.com/OCA/OCB
+[ocb-more]: https://github.com/OCA/OCB/wiki
 
 <a name="toc"></a>
 ## Table of Contents
