@@ -57,7 +57,6 @@ RUN apt update \
   && dpkg -i /opt/sources/wkhtmltox.deb
 
 # Install postgresql-client
-RUN apt update && apt install -yq lsb-release
 RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 RUN apt update && apt install -yq postgresql-client
@@ -79,18 +78,18 @@ VOLUME [ \
 ]
 
 # Use README for the help & man commands
-ADD README.md /usr/share/man/man.txt
+#ADD README.md /usr/share/man/man.txt
 # Remove anchors and links to anchors to improve readability
-RUN sed -i '/^<a name=/ d' /usr/share/man/man.txt
-RUN sed -i -e 's/\[\^\]\[toc\]//g' /usr/share/man/man.txt
-RUN sed -i -e 's/\(\[.*\]\)(#.*)/\1/g' /usr/share/man/man.txt
+#RUN sed -i '/^<a name=/ d' /usr/share/man/man.txt
+#RUN sed -i -e 's/\[\^\]\[toc\]//g' /usr/share/man/man.txt
+#RUN sed -i -e 's/\(\[.*\]\)(#.*)/\1/g' /usr/share/man/man.txt
 # For help command, only keep the "Usage" section
-RUN from=$( awk '/^## Usage/{ print NR; exit }' /usr/share/man/man.txt ) && \
-  from=$(expr $from + 1) && \
-  to=$( awk '/^    \$ docker-compose up/{ print NR; exit }' /usr/share/man/man.txt ) && \
-  head -n $to /usr/share/man/man.txt | \
-  tail -n +$from | \
-  tee /usr/share/man/help.txt > /dev/null
+#RUN from=$( awk '/^## Usage/{ print NR; exit }' /usr/share/man/man.txt ) && \
+#  from=$(expr $from + 1) && \
+#  to=$( awk '/^    \$ docker-compose up/{ print NR; exit }' /usr/share/man/man.txt ) && \
+#  head -n $to /usr/share/man/man.txt | \
+#  tail -n +$from | \
+#  tee /usr/share/man/help.txt > /dev/null
 
 # Use dumb-init as init system to launch the boot script
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64.deb /opt/sources/dumb-init.deb

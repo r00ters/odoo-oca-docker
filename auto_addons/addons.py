@@ -183,6 +183,19 @@ class Repo(object):
         )
         return cmd
 
+    @property
+    def pip_cmd(self):
+        requirements_file = os.path.join(self.path, 'requirements.txt')
+        if os.path.isfile(requirements_file):
+            cmd = 'pip install -r %s' % (
+                requirements_file
+            )
+        else:
+            cmd = 'echo %s do not exists' % (
+                requirements_file
+            )
+        return cmd
+
     def _fetch_branch_name(self):
         # Example of output from `git branch` command:
         #   7.0
@@ -248,6 +261,14 @@ class Repo(object):
                 if result != 0:
                     print >> sys.stderr, 'FATAL: cannot git pull repository'
                     print >> sys.stderr, 'URL: %s' % self.remote_url
+                else:
+                    # Perform `pip install -r requirements.txt`
+                    print 'PIP: pip install -r %s/requirements.txt' % self.path
+                    sys.stdout.flush()
+                    result = subprocess.call(self.pip_cmd.split())
+
+                    if result != 0:
+                        print >> sys.stderr, 'FATAL: cannot pip install -r %s/requirements.txt' % self.path
         else:
             # Perform `git clone`
             print 'Cloning: %s' % self.remote_url
@@ -273,6 +294,14 @@ class Repo(object):
             else:
                 # Branch name is used to fetch the child repos
                 self._fetch_branch_name()
+
+                # Perform `pip install -r requirements.txt`
+                print 'PIP: pip install -r %s/requirements.txt' % self.path
+                sys.stdout.flush()
+                result = subprocess.call(self.pip_cmd.split())
+
+                if result != 0:
+                    print >> sys.stderr, 'FATAL: cannot pip install -r %s/requirements.txt' % self.path
 
         if not is_retry:
             addons_path.append(self.path)
