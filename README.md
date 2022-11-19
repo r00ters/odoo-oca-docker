@@ -9,10 +9,11 @@ Simple yet powerful [Odoo][odoo] image for [Docker][dk] maintained by [Rooters S
 
 <a name="toc"></a>
 ## Table of Contents
-
 - [Credits](#credits)
   - [Contributors](#contribuors)
   - [Mantainer](#mantainer)
+
+[toc]: #toc "Table of Contents"
 
 <a name="credits"></a>
 ## Credits[^][toc]
